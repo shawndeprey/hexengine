@@ -1,0 +1,1 @@
+document.write('<script type="text/javascript" src="scripts/global/utility/console.js"></script>');
