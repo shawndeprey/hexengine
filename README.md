@@ -23,3 +23,18 @@ as well as a name in your credits if you have them. Other than that, use this te
 ALSO, Please do send me an email so I can follow your project if you use hex or its tech! shawndeprey@gmail.com
 
 =========
+
+Getting Started
+=========
+
+Open up index.html with your web browser. (I SERIOUSLY recommend chrome. Chrome is hundreds of times faster than the competition)
+
+=========
+
+In terms of development, the engine is very modular.
+
+*HObjects.js* contains all engine initialization. You can follow the engine out from there in terms of scripting and additional initialization.
+*HEngine.js* contains the main loop. It's even called loop() for simplicity :)
+
+That should give you a good starting point. I know you are probably looking for extensive documentation, but, I don't have the time to create extensive docs. Sorry :(
+However, if you have any questions at all feel free to email me.
