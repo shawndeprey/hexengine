@@ -12,7 +12,7 @@ function World()
 	{
 		system.log("Initializing World...");
 		self.initialized = true;
-		g.get('load')('map', 'javabomb2');
+		g.get('load')('map', 'javabomb');
 	}
 
 	this.reset = function()
