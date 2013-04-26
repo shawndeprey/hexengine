@@ -130,7 +130,6 @@ function Map_Designer()
 
 	this.editObject = function(OBJ)
 	{
-		system.log('Navi Nodes!!!');
 		if(OBJ.type)
 		{
 			switch(OBJ.type)
@@ -178,7 +177,20 @@ function Map_Designer()
 					gm.goToMenu('designer_checkpoint'); 
 					break;
 				}
-				case'light':{ break;}
+				case'light':{
+					self.edit = OBJ;
+					menu = gm.getMenu('designer_light');
+					menu.edit = self.edit;
+					menu.getElement('displayName').updateContent(self.edit.name);
+					menu.getElement('posX').updateContent(''+self.edit.x+'');
+					menu.getElement('posY').updateContent(''+self.edit.y+'');
+					menu.getElement('red').updateContent(''+self.edit.r+'');
+					menu.getElement('green').updateContent(''+self.edit.g+'');
+					menu.getElement('blue').updateContent(''+self.edit.b+'');
+					menu.getElement('radius').updateContent(''+self.edit.radius+'');
+					gm.goToMenu('designer_light');
+					break;
+				}
 				case'emitter':{ break;}
 				case'event':{ break;}
 				case'navi':{

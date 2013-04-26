@@ -197,6 +197,15 @@ function Light(NAME, X, Y, R, G, B, Brightness, Radius, Shader, SpecularFactor, 
 	{
 		self.y = Math.round(Y / lighting.resolution);
 	}
+
+	this.setRadius = function(new_radius)
+	{
+		self.radius = new_radius
+		self.radiusSq = self.radius * self.radius;
+		self.APL = ((lighting.dark - self.a) / self.radius);
+		//self.baseRadius = new_radius;
+		self.baseAPL = self.APL;
+	}
 	
 	this.resize = function()
 	{

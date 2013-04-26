@@ -385,4 +385,100 @@ gm.addMenu('designer_navinode', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/
 			'0'));
 //End Node Number
 	}));
+
+//----------------------------------------------------------------//
+//----------------------Lighting Menu---------------------------//
+//----------------------------------------------------------------//
+gm.addMenu('designer_light', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -4096/*yOffset*/, function(){
+		var self = this;
+		this.addText(new Text_Area('finishedEditingCollisionText', function(){return system.width - 200;}, function(){return system.height - 110;}, function(){return 100;}, 18, 'Arial', '20px', 4, 255, 255, 255, 1, 
+			"Finished   >"
+		));
+		this.addButton(new Color_Button('finishedEditingCollisionButton', function(){return system.width - 150;}, function(){return system.height - 100;}, function(){return 50;}, function(){return 150;}, 
+		'rgb(50,50,50)', 'rgb(80,80,80)', function(){
+			gm.closeMenu();
+		}));
+//Object Name
+		this.addText(new Text_Area('displayName', function(){return 100;}, function(){return 80;}, function(){return 300;}, 32, 'Arial', '32px', 1, 255, 255, 255, 1, 
+			'Object Name'
+		));
+//X Coordinate
+		setX = system.width - 200; setY = 100;
+		this.addButton(new Image_Button('xup', function(){return setX + 100;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.x += 1;designer.edit.worldX += lighting.resolution; self.getElement('posX').updateContent(''+designer.edit.x+''); }, 
+			function(){ designer.edit.x += 1;designer.edit.worldX += lighting.resolution; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addButton(new Image_Button('xdown', function(){return setX - 35;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.x -= 1;designer.edit.worldX -= lighting.resolution; self.getElement('posX').updateContent(''+designer.edit.x+''); },
+			function(){ designer.edit.x -= 1;designer.edit.worldX -= lighting.resolution; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addText(new Text_Area('posX_Title', function(){return setX - 85;}, function(){return setY - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'X:'));
+		this.addText(new Text_Area('posX', function(){return setX;}, function(){return setY;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End X Coordinate
+//Y Coordinate
+		setY2 = 130;
+		this.addButton(new Image_Button('yup', function(){return setX + 100;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.y += 1;designer.edit.worldY += lighting.resolution; self.getElement('posY').updateContent(''+designer.edit.y+''); }, 
+			function(){ designer.edit.y += 1;designer.edit.worldY += lighting.resolution; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addButton(new Image_Button('ydown', function(){return setX - 35;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.y -= 1;designer.edit.worldY -= lighting.resolution; self.getElement('posY').updateContent(''+designer.edit.y+''); },
+			function(){ designer.edit.y -= 1;designer.edit.worldY -= lighting.resolution; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addText(new Text_Area('posY_Title', function(){return setX - 85;}, function(){return setY2 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Y:'));
+		this.addText(new Text_Area('posY', function(){return setX;}, function(){return setY2;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Y Coordinate
+//Red Amount
+		setY3 = 160;
+		this.addButton(new Image_Button('redup', function(){return setX + 100;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.r += designer.edit.r > 254 ? -255 : 1; self.getElement('red').updateContent(''+designer.edit.r+''); }, 
+			function(){ designer.edit.r += designer.edit.r > 254 ? -255 : 1; self.getElement('red').updateContent(''+designer.edit.r+''); }));
+		this.addButton(new Image_Button('reddown', function(){return setX - 35;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.r += designer.edit.r < 1 ? 255 : -1; self.getElement('red').updateContent(''+designer.edit.r+''); },
+			function(){ designer.edit.r += designer.edit.r < 1 ? 255 : -1; self.getElement('red').updateContent(''+designer.edit.r+''); }));
+		this.addText(new Text_Area('red_Title', function(){return setX - 85;}, function(){return setY3 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'R:'));
+		this.addText(new Text_Area('red', function(){return setX;}, function(){return setY3;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Red Amount
+//Green Amount
+		setY4 = 190;
+		this.addButton(new Image_Button('greenup', function(){return setX + 100;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.g += designer.edit.g > 254 ? -255 : 1; self.getElement('green').updateContent(''+designer.edit.g+''); }, 
+			function(){ designer.edit.g += designer.edit.g > 254 ? -255 : 1; self.getElement('green').updateContent(''+designer.edit.g+''); }));
+		this.addButton(new Image_Button('greendown', function(){return setX - 35;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.g += designer.edit.g < 1 ? 255 : -1; self.getElement('green').updateContent(''+designer.edit.g+''); },
+			function(){ designer.edit.g += designer.edit.g < 1 ? 255 : -1; self.getElement('green').updateContent(''+designer.edit.g+''); }));
+		this.addText(new Text_Area('green_Title', function(){return setX - 85;}, function(){return setY4 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'G:'));
+		this.addText(new Text_Area('green', function(){return setX;}, function(){return setY4;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Green Amount
+//Blue Amount
+		setY5 = 220;
+		this.addButton(new Image_Button('blueup', function(){return setX + 100;}, function(){return setY5 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.b += designer.edit.b > 254 ? -255 : 1; self.getElement('blue').updateContent(''+designer.edit.b+''); }, 
+			function(){ designer.edit.b += designer.edit.b > 254 ? -255 : 1; self.getElement('blue').updateContent(''+designer.edit.b+''); }));
+		this.addButton(new Image_Button('bluedown', function(){return setX - 35;}, function(){return setY5 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.b += designer.edit.b < 1 ? 255 : -1; self.getElement('blue').updateContent(''+designer.edit.b+''); },
+			function(){ designer.edit.b += designer.edit.b < 1 ? 255 : -1; self.getElement('blue').updateContent(''+designer.edit.b+''); }));
+		this.addText(new Text_Area('blue_Title', function(){return setX - 85;}, function(){return setY5 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'B:'));
+		this.addText(new Text_Area('blue', function(){return setX;}, function(){return setY5;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Blue Amount
+//Radius
+		setY6 = 250;
+		this.addButton(new Image_Button('radiusup', function(){return setX + 100;}, function(){return setY6 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.setRadius(designer.edit.radius + 1); self.getElement('radius').updateContent(''+designer.edit.radius+''); }, 
+			function(){ designer.edit.setRadius(designer.edit.radius + 1); self.getElement('radius').updateContent(''+designer.edit.radius+''); }));
+		this.addButton(new Image_Button('radiusdown', function(){return setX - 35;}, function(){return setY6 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.setRadius((designer.edit.radius - 1 < 0) ? designer.edit.radius : designer.edit.radius - 1); self.getElement('radius').updateContent(''+designer.edit.radius+''); },
+			function(){ designer.edit.setRadius((designer.edit.radius - 1 < 0) ? designer.edit.radius : designer.edit.radius - 1); self.getElement('radius').updateContent(''+designer.edit.radius+''); }));
+		this.addText(new Text_Area('radius_Title', function(){return setX - 142;}, function(){return setY6 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Radius:'));
+		this.addText(new Text_Area('radius', function(){return setX;}, function(){return setY6;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Radius
+	}));
 }
