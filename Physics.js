@@ -27,6 +27,11 @@ function Physics()
 		self.collisionArea.push(new Collision_Area(NAME, X, Y, H, W));
 	}
 
+	this.removeCollisionArea = function(e)
+	{
+		h.popEntity(self.collisionArea, e);
+	}
+
 	this.calculateCollisions = function()
 	{
 		self.checkCollisions();

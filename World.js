@@ -50,6 +50,11 @@ function World()
 		self.entity.push(newEntity);
 	}
 
+	this.removeEntity = function(e)
+	{
+		h.popEntity(self.entity, e);
+	}
+
 	this.drawEntities = function()
 	{
 		i = self.entity.length;while(i--){if(!self.entity[i].foreground){self.entity[i].draw();}}

@@ -10,6 +10,34 @@ function Helpers()
 		Array.pop();
 	}
 
+	this.popEntity = function(array, entity)
+	{
+		var i = array.length;
+		var index = -1;
+		while(i--){
+			if(array[i].x == entity.x && array[i].y == entity.y){
+				index = i;
+				break;
+			}
+		}
+		if(index != -1){
+			array.splice(index, 1);
+		}
+	}
+
+	this.popEntityFromAssoc = function(associative_array, e)
+	{
+		key = null;
+		$.each(associative_array, function(k){			
+			if(this == e){
+				key = k;
+			}
+		});
+		if(key != null){
+			delete associative_array[key];
+		}
+	}
+
 	this.X = function(x)
 	{
 		return (x - world.xOff) + system.width / 2;

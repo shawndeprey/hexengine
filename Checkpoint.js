@@ -36,6 +36,11 @@ function Checkpoint_Manager()
 		});
 	}
 
+	this.popCheckpoint = function(e)
+	{
+		h.popEntityFromAssoc(self.checkpoint, e);
+	}
+
 	this.checkpointCount = function()
 	{
 		return Object.keys(self.checkpoint).length;

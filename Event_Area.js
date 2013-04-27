@@ -13,6 +13,11 @@ function Event_Manager()
 		}
 	}
 
+	this.removeEvent = function(e)
+	{
+		h.popEntityFromAssoc(self.events, e);
+	}
+
 	this.onEnteredNode = function(NAME)
 	{
 		if(!self.events[NAME].entered) {

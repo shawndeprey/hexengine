@@ -13,6 +13,11 @@ function Navigation_Manager()
 		}
 	}
 
+	this.removeNode = function(e)
+	{
+		h.popEntityFromAssoc(self.node, e);
+	}
+
 	this.naviCount = function()
 	{
 		return Object.keys(self.node).length;

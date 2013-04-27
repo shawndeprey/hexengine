@@ -22,6 +22,11 @@ function Particle_Manager()
 		effect.push(new Particle_FX(EFFECT, X, Y, LIFE, SIZE, ABOVE_LIGHTS, ASSET_OR_COLOR, EMITTER));
 	}
 
+	self.removeFXEmitter = function(e)
+	{
+		h.popEntity(effect, e);
+	}
+
 	self.update = function()
 	{
 		self.numFX = self.numParts = 0;

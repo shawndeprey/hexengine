@@ -329,7 +329,6 @@ function Map_Designer()
 					ani = select.animationBase;
 					world.addEntity(new Prop(select.name, input.screenX, input.screenY, select.height, select.width, select.foreground,
 						new Animation(ani.name,ani.texture,ani.start,ani.end,ani.tpt,ani.size,ani.sheetSize, ani.repeat), select.specialtyFunction));
-					PROPS.get('testprop1')(input.screenX, input.screenY);
 					break;
 				}
 				case'collision':{
@@ -351,12 +350,58 @@ function Map_Designer()
 					break;
 				}
 				case'event':{
-					map.em.addEvent('eventArea'+(map.em.eventCount()+1), input.screenX, input.screenY, 64, 64, true, 'null', 'null', 'null');
+					map.em.addEvent('eventArea'+(map.em.eventCount()+1), input.screenX, input.screenY, select.height, select.width, 
+						select.active, select.onEnterBase, select.onActionBase, select.onExitBase);
 					break;
 				}
 				case'navi':{
 					node_num = map.navi.naviCount() + 1
 					map.navi.addNode('node'+node_num, input.screenX, input.screenY, select.height, select.width, node_num);
+					break;
+				}
+				default:{ system.log('Error: Invalid object type: ' + type); }
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	this.deleteSelectedObject = function()
+	{
+		if(select != false && input.key["x"] == 2){
+			switch(select.type)
+			{
+				case'npc':{
+					world.removeEntity(select);
+					break;
+				}
+				case'prop':{
+					world.removeEntity(select);
+					break;
+				}
+				case'collision':{
+					physics.removeCollisionArea(select);
+					break;
+				}
+				case'checkpoint':{
+					map.checkpoint.popCheckpoint(select);
+					break;
+				}
+				case'light':{
+					h.popEntity(map.lights, select);
+					break;
+				}
+				case'emitter':{
+					fx.removeFXEmitter(select);
+					break;
+				}
+				case'event':{
+					map.em.removeEvent(select);
+					break;
+				}
+				case'navi':{
+					map.navi.removeNode(select);
 					break;
 				}
 				default:{ system.log('Error: Invalid object type: ' + type); }
@@ -373,15 +418,17 @@ function Map_Designer()
 		y = input.screenY;
 		if(!self.checkAddObject()){
 			if(!self.checkCopySelectedObject()){
-				self.checkEntities();
-				self.checkCollisionAreas();
-				self.checkLights();
-				self.checkEmitters();
-				self.checkCheckpoints();
-				self.checkEvents();
-				self.checkNaviNodes();
-				if(select != false){
-					self.dragSelectedObject();
+				if(!self.deleteSelectedObject()){
+					self.checkEntities();
+					self.checkCollisionAreas();
+					self.checkLights();
+					self.checkEmitters();
+					self.checkCheckpoints();
+					self.checkEvents();
+					self.checkNaviNodes();
+					if(select != false){
+						self.dragSelectedObject();
+					}
 				}
 			}
 		}
