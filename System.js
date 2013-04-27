@@ -35,11 +35,13 @@ function System()
 		if(input.key['f7'] == 2){self.lights = !self.lights;}
 		if(input.key['f8'] == 2){self.lightEntityInteraction = !self.lightEntityInteraction;}
 		if(input.key['f9'] == 2){self.designMode = !self.designMode;}
-    if(input.key['0'] == 2){lighting.resChange = true; lighting.resolution++;}
-    if(input.key['9'] == 2){lighting.resChange = true; lighting.resolution -= lighting.resolution - 1 > 0 ? 1 : 0;}
-    if(input.key['8'] == 2){map.checkpoint.moveEntityToActiveCheckpoint(world.player);}
-    if(input.key['7'] == 2){ if(asset.allAssetsLoaded){asset.playRandomBGMFromMapList();} else {system.log('All assets not loaded. Not playing random song.');} }
-		if(input.key['6'] == 2){ g.get('move')('player', 500, 0); }
+    if(!self.designMode){
+    	if(input.key['0'] == 2){lighting.resChange = true; lighting.resolution++;}
+	    if(input.key['9'] == 2){lighting.resChange = true; lighting.resolution -= lighting.resolution - 1 > 0 ? 1 : 0;}
+	    if(input.key['8'] == 2){map.checkpoint.moveEntityToActiveCheckpoint(world.player);}
+	    if(input.key['7'] == 2){ if(asset.allAssetsLoaded){asset.playRandomBGMFromMapList();} else {system.log('All assets not loaded. Not playing random song.');} }
+			if(input.key['6'] == 2){ g.get('move')('player', 500, 0); }
+    }
   }
 
   this.log = function(out)

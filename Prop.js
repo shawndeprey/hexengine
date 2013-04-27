@@ -10,7 +10,8 @@ function Prop(NAME, X, Y, H, W, FOREGROUND, ANIMATION, SPECIALTY_FUNCTION)
 	self.width = W;
   self.foreground = FOREGROUND;
 	var animate = new Animation_Manager();
-	animate.addPreMadeAnimation(ANIMATION.name, ANIMATION);
+  self.animationBase = ANIMATION;
+	animate.addPreMadeAnimation(self.animationBase.name, self.animationBase);
 	self.specialtyFunction = SPECIALTY_FUNCTION;
 
   this.update = function()

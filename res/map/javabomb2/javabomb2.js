@@ -8,9 +8,7 @@ function map_javabomb2()
 
 	this.loadMapBGM = function(theMap)
 	{
-		theMap.bgm["erubescent"] = true;
-		theMap.bgm["tenebrous"] = true;
-		theMap.bgm["virescent"] = true;
+		theMap.bgm["chords"] = true;
 	}
 
 	this.loadParticleEmitters = function(theMap)

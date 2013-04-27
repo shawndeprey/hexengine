@@ -214,7 +214,7 @@ function Physics()
 
 		map.checkpoint.drawCheckpoints();
 		map.em.drawEventAreas();
-		map.navi.drawNaviLink_ZeldasBitch_Friend();
+		map.navi.drawNaviNode();
 
 		canvas.fillStyle = "rgb(80,80,120)";
 		var i = map.lights.length;

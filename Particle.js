@@ -55,6 +55,7 @@ function Particle_FX(EFFECT, X, Y, LIFE, SIZE, ABOVE_LIGHTS, ASSET_OR_COLOR, OPT
 {
 	var self = this;
 	self.parts = [];
+	self.name = EFFECT
 	self.x = X;
 	self.y = Y;
 	self.xv = 0;
@@ -72,7 +73,26 @@ function Particle_FX(EFFECT, X, Y, LIFE, SIZE, ABOVE_LIGHTS, ASSET_OR_COLOR, OPT
 	} else {
 		self.type = 'fx';
 	}
+	self.baseEmitterFuncName = OPTIONAL_EMITTER_UPDATE_FUNCTION;
 	self.emitter = (OPTIONAL_EMITTER_UPDATE_FUNCTION) ? fxmanager.get(OPTIONAL_EMITTER_UPDATE_FUNCTION) : function(){ system.log('FX not an emitter...'); };
+
+	self.toggleAboveLights = function()
+	{
+		self.al = !self.al;
+	}
+
+	self.changeFX = function(direction)
+	{
+		fx_list = fxmanager.getFXList();
+		var i = fx_list.indexOf(self.name);
+		if(direction < 0) {
+			i = i - 1 < 0 ? fx_list.length - 1 : i - 1;
+		} else {
+			i = i + 1 > fx_list.length - 1 ? 0 : i + 1;
+		}
+		self.name = fx_list[i];
+		self.emitter = fxmanager.get(self.name);
+	}
 
 	self.update = function()
 	{

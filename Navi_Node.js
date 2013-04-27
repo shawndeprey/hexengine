@@ -13,7 +13,12 @@ function Navigation_Manager()
 		}
 	}
 
-	this.drawNaviLink_ZeldasBitch_Friend = function()
+	this.naviCount = function()
+	{
+		return Object.keys(self.node).length;
+	}
+
+	this.drawNaviNode = function()
 	{
 		started = false;
 		canvas.fillStyle = "rgb(255,175,255)";

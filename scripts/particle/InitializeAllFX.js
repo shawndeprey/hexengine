@@ -20,6 +20,12 @@ function FX_Manager()
 			return function(){ system.log("System could not find event: " + NAME); }
 		}
 	}
+
+	this.getFXList = function()
+	{
+		return Object.keys(effect)
+
+	}
 }
 var fxmanager = new FX_Manager();
 fxmanager.add('null', function(){});

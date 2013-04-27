@@ -44,6 +44,11 @@ function Event_Manager()
 		});
 	}
 
+	this.eventCount = function()
+	{
+		return Object.keys(self.events).length;
+	}
+
 	this.drawEventAreas = function()
 	{
 		$.each(self.events, function(){
@@ -66,9 +71,18 @@ function Event_Area(NAME, X, Y, H, W, ACTIVE, ON_ENTER, ON_ACTION, ON_EXIT)
 
 	self.entered = false;
 
-	this.onEnter = GAME_EVENT.get(ON_ENTER);
-	this.onAction = GAME_EVENT.get(ON_ACTION);
-	this.onExit = GAME_EVENT.get(ON_EXIT);
+	self.onEnterBase = ON_ENTER;
+	self.onActionBase = ON_ACTION;
+	self.onExitBase = ON_EXIT;
+
+	self.onEnter = GAME_EVENT.get(ON_ENTER);
+	self.onAction = GAME_EVENT.get(ON_ACTION);
+	self.onExit = GAME_EVENT.get(ON_EXIT);
+
+	this.toggleActive = function()
+	{
+		self.active = !self.active;
+	}
 
 	this.draw = function()
 	{

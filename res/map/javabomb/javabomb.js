@@ -8,14 +8,13 @@ function map_javabomb()
 
 	this.loadMapBGM = function(theMap)
 	{
-		theMap.bgm["erubescent"] = true;
-		theMap.bgm["tenebrous"] = true;
-		theMap.bgm["virescent"] = true;
+		theMap.bgm["chords"] = true;
 	}
 
 	this.loadParticleEmitters = function(theMap)
 	{
-		fx.addFXEmitter('explosion1', 500, 150, -1/*emitter*/, 50, true, 'rgb(255,0,0)', 'explosion-emitter');
+		//fx.addFXEmitter('explosion1', 500, 150, -1/*emitter*/, 50, true, 'rgb(255,0,0)', 'explosion-emitter');
+		fx.addFXEmitter('explosion1', 500, 150, -1/*emitter*/, 50, true, 'muteOn', 'explosion-emitter');
 	}
 
 	this.loadPhysics = function(theMap)

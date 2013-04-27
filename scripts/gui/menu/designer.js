@@ -387,7 +387,7 @@ gm.addMenu('designer_navinode', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/
 	}));
 
 //----------------------------------------------------------------//
-//----------------------Lighting Menu---------------------------//
+//----------------------Lighting Menu-----------------------------//
 //----------------------------------------------------------------//
 gm.addMenu('designer_light', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -4096/*yOffset*/, function(){
 		var self = this;
@@ -480,5 +480,297 @@ gm.addMenu('designer_light', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -
 		this.addText(new Text_Area('radius', function(){return setX;}, function(){return setY6;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
 			'0'));
 //End Radius
+//Brightness
+		setY7 = 280;
+		this.addButton(new Image_Button('brightnessup', function(){return setX + 100;}, function(){return setY7 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.setBrightness(designer.edit.brightness + 1); self.getElement('brightness').updateContent(''+designer.edit.brightness+''); }, 
+			function(){ designer.edit.setBrightness(designer.edit.brightness + 1); self.getElement('brightness').updateContent(''+designer.edit.brightness+''); }));
+		this.addButton(new Image_Button('brightnessdown', function(){return setX - 35;}, function(){return setY7 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.setBrightness(designer.edit.brightness - 1); self.getElement('brightness').updateContent(''+designer.edit.brightness+''); },
+			function(){ designer.edit.setBrightness(designer.edit.brightness - 1); self.getElement('brightness').updateContent(''+designer.edit.brightness+''); }));
+		this.addText(new Text_Area('brightness_Title', function(){return setX - 180;}, function(){return setY7 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Brightness:'));
+		this.addText(new Text_Area('brightness', function(){return setX;}, function(){return setY7;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Brightness
+//Specular Factor
+		setY8 = 310;
+		this.addButton(new Image_Button('specularup', function(){return setX + 100;}, function(){return setY8 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.changeSpecFactor(0.01); self.getElement('specular').updateContent(''+Math.floor(designer.edit.specularFactor * 100) / 100+''); }, 
+			function(){ designer.edit.changeSpecFactor(0.01); self.getElement('specular').updateContent(''+Math.floor(designer.edit.specularFactor * 100) / 100+''); }));
+		this.addButton(new Image_Button('speculardown', function(){return setX - 35;}, function(){return setY8 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.changeSpecFactor(-0.01); self.getElement('specular').updateContent(''+Math.floor(designer.edit.specularFactor * 100) / 100+''); },
+			function(){ designer.edit.changeSpecFactor(-0.01); self.getElement('specular').updateContent(''+Math.floor(designer.edit.specularFactor * 100) / 100+''); }));
+		this.addText(new Text_Area('specular_Title', function(){return setX - 161;}, function(){return setY8 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Specular:'));
+		this.addText(new Text_Area('specular', function(){return setX;}, function(){return setY8;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Specular Factor
+//Shader
+		setY9 = 340;
+		this.addButton(new Image_Button('shaderbutton', function(){return setX + 100;}, function(){return setY9 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.changeShader(); self.getElement('shader').updateContent(''+self.edit.getShaderName()+''); }, 
+			function(){ designer.edit.changeShader(); self.getElement('shader').updateContent(''+self.edit.getShaderName()+''); }));
+		this.addText(new Text_Area('shader_Title', function(){return setX - 140;}, function(){return setY9 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Shader:'));
+		this.addText(new Text_Area('shader', function(){return setX;}, function(){return setY9;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Shader
+//Interaction
+		setY10 = 370;
+		this.addButton(new Image_Button('interactablebutton', function(){return setX + 100;}, function(){return setY10 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.toggleLightInteraction(); self.getElement('interactable').updateContent(''+self.edit.interact+''); }, 
+			function(){ designer.edit.toggleLightInteraction(); self.getElement('interactable').updateContent(''+self.edit.interact+''); }));
+		this.addText(new Text_Area('interactable_Title', function(){return setX - 200;}, function(){return setY10 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Interactable:'));
+		this.addText(new Text_Area('interactable', function(){return setX;}, function(){return setY10;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Interaction
+	}));
+
+//----------------------------------------------------------------//
+//----------------------Event Area Menu---------------------------//
+//----------------------------------------------------------------//
+gm.addMenu('designer_event_area', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -4096/*yOffset*/, function(){
+		var self = this;
+		this.addText(new Text_Area('finishedEditingCollisionText', function(){return system.width - 200;}, function(){return system.height - 110;}, function(){return 100;}, 18, 'Arial', '20px', 4, 255, 255, 255, 1, 
+			"Finished   >"
+		));
+		this.addButton(new Color_Button('finishedEditingCollisionButton', function(){return system.width - 150;}, function(){return system.height - 100;}, function(){return 50;}, function(){return 150;}, 
+		'rgb(50,50,50)', 'rgb(80,80,80)', function(){
+			gm.closeMenu();
+		}));
+		this.addText(new Text_Area('displayName', function(){return 100;}, function(){return 80;}, function(){return 300;}, 32, 'Arial', '32px', 1, 255, 255, 255, 1, 
+			'Object Name'
+		));
+		this.addText(new Text_Area('onenter', function(){return 100;}, function(){return 130;}, function(){return 300;}, 32, 'Arial', '18px', 1, 255, 255, 255, 1, 
+			'On Enter:'
+		));
+		this.addText(new Text_Area('onaction', function(){return 100;}, function(){return 160;}, function(){return 300;}, 32, 'Arial', '18px', 1, 255, 255, 255, 1, 
+			'On Action:'
+		));
+		this.addText(new Text_Area('onexit', function(){return 100;}, function(){return 190;}, function(){return 300;}, 32, 'Arial', '18px', 1, 255, 255, 255, 1, 
+			'On Exit:'
+		));
+
+//X Coordinate
+		setX = system.width - 200; setY = 100;
+		this.addButton(new Image_Button('xup', function(){return setX + 100;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }, 
+			function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addButton(new Image_Button('xdown', function(){return setX - 35;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); },
+			function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addText(new Text_Area('posX_Title', function(){return setX - 85;}, function(){return setY - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'X:'));
+		this.addText(new Text_Area('posX', function(){return setX;}, function(){return setY;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End X Coordinate
+//Y Coordinate
+		setY2 = 130;
+		this.addButton(new Image_Button('yup', function(){return setX + 100;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }, 
+			function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addButton(new Image_Button('ydown', function(){return setX - 35;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); },
+			function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addText(new Text_Area('posY_Title', function(){return setX - 85;}, function(){return setY2 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Y:'));
+		this.addText(new Text_Area('posY', function(){return setX;}, function(){return setY2;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Y Coordinate
+//Height
+		setY3 = 160;
+		this.addButton(new Image_Button('hup', function(){return setX + 100;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.height += 1; self.getElement('height').updateContent(''+designer.edit.height+''); }, 
+			function(){ designer.edit.height += 1; self.getElement('height').updateContent(''+designer.edit.height+''); }));
+		this.addButton(new Image_Button('hdown', function(){return setX - 35;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.height -= 1; self.getElement('height').updateContent(''+designer.edit.height+''); },
+			function(){ designer.edit.height -= 1; self.getElement('height').updateContent(''+designer.edit.height+''); }));
+		this.addText(new Text_Area('H_Title', function(){return setX - 85;}, function(){return setY3 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'H:'));
+		this.addText(new Text_Area('height', function(){return setX;}, function(){return setY3;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Height
+//Width
+		setY4 = 190;
+		this.addButton(new Image_Button('wup', function(){return setX + 100;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.width += 1; self.getElement('width').updateContent(''+designer.edit.width+''); }, 
+			function(){ designer.edit.width += 1; self.getElement('width').updateContent(''+designer.edit.width+''); }));
+		this.addButton(new Image_Button('wdown', function(){return setX - 35;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.width -= 1; self.getElement('width').updateContent(''+designer.edit.width+''); },
+			function(){ designer.edit.width -= 1; self.getElement('width').updateContent(''+designer.edit.width+''); }));
+		this.addText(new Text_Area('W_Title', function(){return setX - 85;}, function(){return setY4 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'W:'));
+		this.addText(new Text_Area('width', function(){return setX;}, function(){return setY4;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Width
+//Active
+		setY5 = 220;
+		this.addButton(new Image_Button('activebutton', function(){return setX + 100;}, function(){return setY5 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.toggleActive(); self.getElement('active').updateContent(''+self.edit.active+''); }, 
+			function(){ designer.edit.toggleActive(); self.getElement('active').updateContent(''+self.edit.active+''); }));
+		this.addText(new Text_Area('active_Title', function(){return setX - 130;}, function(){return setY5 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Active:'));
+		this.addText(new Text_Area('active', function(){return setX;}, function(){return setY5;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Active
+	}));
+
+//----------------------------------------------------------------//
+//----------------------Particle Emitter Menu---------------------//
+//----------------------------------------------------------------//
+gm.addMenu('designer_particle_emitter', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -4096/*yOffset*/, function(){
+		var self = this;
+		this.addText(new Text_Area('finishedEditingCollisionText', function(){return system.width - 200;}, function(){return system.height - 110;}, function(){return 100;}, 18, 'Arial', '20px', 4, 255, 255, 255, 1, 
+			"Finished   >"
+		));
+		this.addButton(new Color_Button('finishedEditingCollisionButton', function(){return system.width - 150;}, function(){return system.height - 100;}, function(){return 50;}, function(){return 150;}, 
+		'rgb(50,50,50)', 'rgb(80,80,80)', function(){
+			gm.closeMenu();
+		}));
+		this.addText(new Text_Area('displayName', function(){return 100;}, function(){return 80;}, function(){return 300;}, 32, 'Arial', '32px', 1, 255, 255, 255, 1, 
+			'Object Name'
+		));
+		this.addButton(new Image_Button('changeEmitterUp', function(){return 70;}, function(){return 80;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.changeFX(1); self.getElement('displayName').updateContent(''+designer.edit.name+''); }, 
+			function(){ designer.edit.changeFX(1); self.getElement('displayName').updateContent(''+designer.edit.name+''); }));
+		this.addButton(new Image_Button('changeEmitterDown', function(){return 50;}, function(){return 80;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.changeFX(-1); self.getElement('displayName').updateContent(''+designer.edit.name+''); }, 
+			function(){ designer.edit.changeFX(-1); self.getElement('displayName').updateContent(''+designer.edit.name+''); }));
+		
+		this.addText(new Text_Area('asset', function(){return 100;}, function(){return 125;}, function(){return 300;}, 32, 'Arial', '18px', 1, 255, 255, 255, 1, 
+			'Asset: '
+		));
+//X Coordinate
+		setX = system.width - 200; setY = 100;
+		this.addButton(new Image_Button('xup', function(){return setX + 100;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }, 
+			function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addButton(new Image_Button('xdown', function(){return setX - 35;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); },
+			function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addText(new Text_Area('posX_Title', function(){return setX - 85;}, function(){return setY - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'X:'));
+		this.addText(new Text_Area('posX', function(){return setX;}, function(){return setY;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End X Coordinate
+//Y Coordinate
+		setY2 = 130;
+		this.addButton(new Image_Button('yup', function(){return setX + 100;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }, 
+			function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addButton(new Image_Button('ydown', function(){return setX - 35;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); },
+			function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addText(new Text_Area('posY_Title', function(){return setX - 85;}, function(){return setY2 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Y:'));
+		this.addText(new Text_Area('posY', function(){return setX;}, function(){return setY2;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Y Coordinate
+//Emitter Starting Size
+		setY3 = 160;
+		this.addButton(new Image_Button('sizeup', function(){return setX + 100;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.size += 1; self.getElement('size').updateContent(''+designer.edit.size+''); }, 
+			function(){ designer.edit.size += 1; self.getElement('size').updateContent(''+designer.edit.size+''); }));
+		this.addButton(new Image_Button('sizedown', function(){return setX - 35;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.size -= 1; self.getElement('size').updateContent(''+designer.edit.size+''); },
+			function(){ designer.edit.size -= 1; self.getElement('size').updateContent(''+designer.edit.size+''); }));
+		this.addText(new Text_Area('size_Title', function(){return setX - 205;}, function(){return setY3 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Starting Size:'));
+		this.addText(new Text_Area('size', function(){return setX;}, function(){return setY3;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Emitter Starting Size
+//Active
+		setY4 = 190;
+		this.addButton(new Image_Button('abovelightsbutton', function(){return setX + 100;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.toggleAboveLights(); self.getElement('abovelights').updateContent(''+self.edit.al+''); }, 
+			function(){ designer.edit.toggleAboveLights(); self.getElement('abovelights').updateContent(''+self.edit.al+''); }));
+		this.addText(new Text_Area('abovelights_Title', function(){return setX - 205;}, function(){return setY4 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Above Lights:'));
+		this.addText(new Text_Area('abovelights', function(){return setX;}, function(){return setY4;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Active
+	}));
+//----------------------------------------------------------------//
+//----------------------Particle Emitter Menu---------------------//
+//----------------------------------------------------------------//
+gm.addMenu('designer_prop', new Gui_Menu(false/*Statless*/, -4096/*xOffset*/, -4096/*yOffset*/, function(){
+		var self = this;
+		this.addText(new Text_Area('finishedEditingCollisionText', function(){return system.width - 200;}, function(){return system.height - 110;}, function(){return 100;}, 18, 'Arial', '20px', 4, 255, 255, 255, 1, 
+			"Finished   >"
+		));
+		this.addButton(new Color_Button('finishedEditingCollisionButton', function(){return system.width - 150;}, function(){return system.height - 100;}, function(){return 50;}, function(){return 150;}, 
+		'rgb(50,50,50)', 'rgb(80,80,80)', function(){
+			gm.closeMenu();
+		}));
+		this.addText(new Text_Area('displayName', function(){return 100;}, function(){return 80;}, function(){return 300;}, 32, 'Arial', '32px', 1, 255, 255, 255, 1, 
+			'Object Name'
+		));
+		this.addText(new Text_Area('displayName', function(){return 100;}, function(){return 125;}, function(){return 600;}, 32, 'Arial', '18px', 1, 255, 255, 255, 1, 
+			'Remember! Props require an animation object and an update function.'
+		));
+//X Coordinate
+		setX = system.width - 200; setY = 100;
+		this.addButton(new Image_Button('xup', function(){return setX + 100;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }, 
+			function(){ designer.edit.x += 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addButton(new Image_Button('xdown', function(){return setX - 35;}, function(){return setY + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); },
+			function(){ designer.edit.x -= 1; self.getElement('posX').updateContent(''+designer.edit.x+''); }));
+		this.addText(new Text_Area('posX_Title', function(){return setX - 85;}, function(){return setY - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'X:'));
+		this.addText(new Text_Area('posX', function(){return setX;}, function(){return setY;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End X Coordinate
+//Y Coordinate
+		setY2 = 130;
+		this.addButton(new Image_Button('yup', function(){return setX + 100;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }, 
+			function(){ designer.edit.y += 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addButton(new Image_Button('ydown', function(){return setX - 35;}, function(){return setY2 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); },
+			function(){ designer.edit.y -= 1; self.getElement('posY').updateContent(''+designer.edit.y+''); }));
+		this.addText(new Text_Area('posY_Title', function(){return setX - 85;}, function(){return setY2 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Y:'));
+		this.addText(new Text_Area('posY', function(){return setX;}, function(){return setY2;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Y Coordinate
+//Height
+		setY3 = 160;
+		this.addButton(new Image_Button('hup', function(){return setX + 100;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.height += 1; self.getElement('height').updateContent(''+designer.edit.height+''); }, 
+			function(){ designer.edit.height += 1; self.getElement('height').updateContent(''+designer.edit.height+''); }));
+		this.addButton(new Image_Button('hdown', function(){return setX - 35;}, function(){return setY3 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.height -= 1; self.getElement('height').updateContent(''+designer.edit.height+''); },
+			function(){ designer.edit.height -= 1; self.getElement('height').updateContent(''+designer.edit.height+''); }));
+		this.addText(new Text_Area('H_Title', function(){return setX - 85;}, function(){return setY3 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'H:'));
+		this.addText(new Text_Area('height', function(){return setX;}, function(){return setY3;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Height
+//Width
+		setY4 = 190;
+		this.addButton(new Image_Button('wup', function(){return setX + 100;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeUp', 'volumeUpHover', function(){ designer.edit.width += 1; self.getElement('width').updateContent(''+designer.edit.width+''); }, 
+			function(){ designer.edit.width += 1; self.getElement('width').updateContent(''+designer.edit.width+''); }));
+		this.addButton(new Image_Button('wdown', function(){return setX - 35;}, function(){return setY4 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.width -= 1; self.getElement('width').updateContent(''+designer.edit.width+''); },
+			function(){ designer.edit.width -= 1; self.getElement('width').updateContent(''+designer.edit.width+''); }));
+		this.addText(new Text_Area('W_Title', function(){return setX - 85;}, function(){return setY4 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'W:'));
+		this.addText(new Text_Area('width', function(){return setX;}, function(){return setY4;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'0'));
+//End Width
+//Foreground
+		setY5 = 220;
+		this.addButton(new Image_Button('foregrounddown', function(){return setX - 35;}, function(){return setY5 + 7;}, function(){return 20;}, function(){return 20;}, 
+			'volumeDown', 'volumeDownHover', function(){ designer.edit.foreground = (designer.edit.foreground) ? false : true; self.getElement('foreground').updateContent(''+designer.edit.foreground+''); },
+			function(){ designer.edit.foreground -= 1; self.getElement('foreground').updateContent(''+designer.edit.foreground+''); }));
+		this.addText(new Text_Area('Foreground_Title', function(){return setX - 188;}, function(){return setY5 - 8;}, function(){return 100;}, 24, 'Arial', '24px', 1, 255, 255, 255, 1, 
+			'Foreground:'));
+		this.addText(new Text_Area('foreground', function(){return setX;}, function(){return setY5;}, function(){return 100;}, 15, 'Arial', '15px', 1, 255, 255, 255, 1, 
+			'false'));
+//End Foreground
 	}));
 }

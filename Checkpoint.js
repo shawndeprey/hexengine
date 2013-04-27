@@ -13,7 +13,7 @@ function Checkpoint_Manager()
 		} else {
 			system.log("Tried to add multiple key in checkpoint: " + NAME);
 		}
-	}
+	}	
 
 	this.onEnteredNode = function(NAME)
 	{
@@ -34,6 +34,11 @@ function Checkpoint_Manager()
 				entity.y = this.y;
 			}
 		});
+	}
+
+	this.checkpointCount = function()
+	{
+		return Object.keys(self.checkpoint).length;
 	}
 
 	this.drawCheckpoints = function()

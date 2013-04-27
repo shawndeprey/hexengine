@@ -151,7 +151,19 @@ function Map_Designer()
 					gm.goToMenu('designer_npc'); 
 					break;
 				}
-				case'prop':{ break;}
+				case'prop':{
+					self.edit = OBJ;
+					menu = gm.getMenu('designer_prop');
+					menu.edit = self.edit;
+					menu.getElement('displayName').updateContent(self.edit.name);
+					menu.getElement('posX').updateContent(''+self.edit.x+'');
+					menu.getElement('posY').updateContent(''+self.edit.y+'');
+					menu.getElement('height').updateContent(''+self.edit.height+'');
+					menu.getElement('width').updateContent(''+self.edit.width+'');
+					menu.getElement('foreground').updateContent(''+self.edit.foreground+'');
+					gm.goToMenu('designer_prop'); 
+					break;
+				}
 				case'collision':{ 
 					self.edit = OBJ;
 					menu = gm.getMenu('designer_collision');
@@ -188,11 +200,42 @@ function Map_Designer()
 					menu.getElement('green').updateContent(''+self.edit.g+'');
 					menu.getElement('blue').updateContent(''+self.edit.b+'');
 					menu.getElement('radius').updateContent(''+self.edit.radius+'');
+					menu.getElement('brightness').updateContent(''+self.edit.brightness+'');
+					menu.getElement('specular').updateContent(''+Math.floor(self.edit.specularFactor * 100) / 100+'');
+					menu.getElement('shader').updateContent(''+self.edit.getShaderName()+'');
+					menu.getElement('interactable').updateContent(''+self.edit.interact+'');
 					gm.goToMenu('designer_light');
 					break;
 				}
-				case'emitter':{ break;}
-				case'event':{ break;}
+				case'emitter':{
+					self.edit = OBJ;
+					menu = gm.getMenu('designer_particle_emitter');
+					menu.edit = self.edit;
+					menu.getElement('displayName').updateContent(self.edit.name);
+					menu.getElement('asset').updateContent('Asset: '+self.edit.asset_or_color);
+					menu.getElement('posX').updateContent(''+self.edit.x+'');
+					menu.getElement('posY').updateContent(''+self.edit.y+'');
+					menu.getElement('size').updateContent(''+self.edit.size+'');
+					menu.getElement('abovelights').updateContent(''+self.edit.al+'');
+					gm.goToMenu('designer_particle_emitter');
+					break;
+				}
+				case'event':{
+					self.edit = OBJ;
+					menu = gm.getMenu('designer_event_area');
+					menu.edit = self.edit;
+					menu.getElement('displayName').updateContent(self.edit.name);
+					menu.getElement('onenter').updateContent('On Enter: '+self.edit.onEnterBase);
+					menu.getElement('onaction').updateContent('On Action: '+self.edit.onActionBase);
+					menu.getElement('onexit').updateContent('On Exit: '+self.edit.onExitBase);
+					menu.getElement('posX').updateContent(''+self.edit.x+'');
+					menu.getElement('posY').updateContent(''+self.edit.y+'');
+					menu.getElement('height').updateContent(''+self.edit.height+'');
+					menu.getElement('width').updateContent(''+self.edit.width+'');
+					menu.getElement('active').updateContent(''+self.edit.active+'');
+					gm.goToMenu('designer_event_area');
+					break;
+				}
 				case'navi':{
 					self.edit = OBJ;
 					menu = gm.getMenu('designer_navinode');
@@ -212,25 +255,115 @@ function Map_Designer()
 		}
 	}
 
-	this.addObject = function(type, OBJ)
+	this.checkAddObject = function()
 	{
-		switch(type)
-		{
-			case'npc':{ break;}
-			case'prop':{ break;}
-			case'collision':{ 
-				id = physics.collisionArea.length;
-				//What you were doing here is creating a way to add new objects. The id will be for the naming scheme. You will call this function from
-				//any designer gui and pass in the type of object you want to create. OBJ is an optional argument which if it exists you will use that
-				//as the new object instead of making one from scratch.
-				break;
+		var type = (input.key['1'] == 1) ? 'npc' : null;
+		var type = (input.key['2'] == 1) ? 'prop' : type;
+		var type = (input.key['3'] == 1) ? 'collision' : type;
+		var type = (input.key['4'] == 1) ? 'checkpoint' : type;
+		var type = (input.key['5'] == 1) ? 'light' : type;
+		var type = (input.key['6'] == 1) ? 'emitter' : type;
+		var type = (input.key['7'] == 1) ? 'event' : type;
+		var type = (input.key['8'] == 1) ? 'navi' : type;
+		if(type != null && input.mouseLeft == 2){
+			switch(type)
+			{
+				case'npc':{
+					world.addEntity( new Entity_NPC('test1', input.screenX/*X*/, input.screenY/*Y*/, 300/*speed*/, 0.25/*step size*/, 48/*W*/, 128/*H*/, false/*Foreground*/, 'base_idle'/*Script*/, 'base_secondary_update') );
+					physics.addEntity(world.entity[world.entity.length - 1]);
+					break;
+				}
+				case'prop':{
+					PROPS.get('testprop1')(input.screenX, input.screenY);
+					break;
+				}
+				case'collision':{ 
+					physics.addCollisionArea('col'+physics.collisionArea.length, input.screenX, input.screenY, 25, 25);
+					break;
+				}
+				case'checkpoint':{
+					map.checkpoint.addCheckpoint('checkpoint'+(map.checkpoint.checkpointCount()+1), input.screenX, input.screenY, 32, 32, false);
+					break;
+				}
+				case'light':{
+					r = Math.floor(Math.random()*255);
+					g = Math.floor(Math.random()*255);
+					b = Math.floor(Math.random()*255);
+					brightness = Math.floor(Math.random()*30) + 55;
+					radius = Math.floor(Math.random()*150) + 105;
+					map.lights.push(new Light('Light'+map.lights.length, input.screenX, input.screenY, r, g, b, brightness, radius, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+					break;
+				}
+				case'emitter':{
+					fx.addFXEmitter('explosion1', input.screenX, input.screenY, -1/*emitter*/, 50, true, 'rgb(255,0,0)', 'explosion-emitter');
+					break;
+				}
+				case'event':{
+					map.em.addEvent('eventArea'+(map.em.eventCount()+1), input.screenX, input.screenY, 64, 64, true, 'null', 'null', 'null');
+					break;
+				}
+				case'navi':{
+					node_num = map.navi.naviCount() + 1
+					map.navi.addNode('node'+node_num, input.screenX, input.screenY, 32, 32, node_num);
+					break;
+				}
+				default:{ system.log('Error: Invalid object type: ' + type); }
 			}
-			case'checkpoint':{ break;}
-			case'light':{ break;}
-			case'emitter':{ break;}
-			case'event':{ break;}
-			case'navi':{ break;}
-			default:{ system.log('Error: Invalid object type: ' + type); }
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	this.checkCopySelectedObject = function()
+	{
+		if(select != false && input.key["c"] == 2){
+			switch(select.type)
+			{
+				case'npc':{
+					world.addEntity( new Entity_NPC(select.name, input.screenX, input.screenY, select.speed, select.stepSize, select.width, select.height, select.foreground, select.startAI, select.secondAI) );
+					physics.addEntity(world.entity[world.entity.length - 1]);
+					break;
+				}
+				case'prop':{
+					ani = select.animationBase;
+					world.addEntity(new Prop(select.name, input.screenX, input.screenY, select.height, select.width, select.foreground,
+						new Animation(ani.name,ani.texture,ani.start,ani.end,ani.tpt,ani.size,ani.sheetSize, ani.repeat), select.specialtyFunction));
+					PROPS.get('testprop1')(input.screenX, input.screenY);
+					break;
+				}
+				case'collision':{
+					physics.addCollisionArea('col'+physics.collisionArea.length, input.screenX, input.screenY, select.h, select.w);
+					break;
+				}
+				case'checkpoint':{
+					map.checkpoint.addCheckpoint('checkpoint'+(map.checkpoint.checkpointCount()+1), input.screenX, input.screenY, select.height, select.width, false);
+					break;
+				}
+				case'light':{
+					map.lights.push(new Light('Light'+map.lights.length, input.screenX, input.screenY, select.r, select.g, select.b, 
+						select.brightness, select.baseRadius, select.shader, select.specularFactor, select.interact));
+					break;
+				}
+				case'emitter':{
+					fx.addFXEmitter(select.name, input.screenX, input.screenY, select.life, select.size, select.al, 
+						select.asset_or_color, select.baseEmitterFuncName);
+					break;
+				}
+				case'event':{
+					map.em.addEvent('eventArea'+(map.em.eventCount()+1), input.screenX, input.screenY, 64, 64, true, 'null', 'null', 'null');
+					break;
+				}
+				case'navi':{
+					node_num = map.navi.naviCount() + 1
+					map.navi.addNode('node'+node_num, input.screenX, input.screenY, select.height, select.width, node_num);
+					break;
+				}
+				default:{ system.log('Error: Invalid object type: ' + type); }
+			}
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -238,15 +371,19 @@ function Map_Designer()
 	{
 		x = input.screenX;
 		y = input.screenY;
-		self.checkEntities();
-		self.checkCollisionAreas();
-		self.checkLights();
-		self.checkEmitters();
-		self.checkCheckpoints();
-		self.checkEvents();
-		self.checkNaviNodes();
-		if(select != false){
-			self.dragSelectedObject();
+		if(!self.checkAddObject()){
+			if(!self.checkCopySelectedObject()){
+				self.checkEntities();
+				self.checkCollisionAreas();
+				self.checkLights();
+				self.checkEmitters();
+				self.checkCheckpoints();
+				self.checkEvents();
+				self.checkNaviNodes();
+				if(select != false){
+					self.dragSelectedObject();
+				}
+			}
 		}
 	}
 }

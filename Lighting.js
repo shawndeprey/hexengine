@@ -167,15 +167,15 @@ function Light(NAME, X, Y, R, G, B, Brightness, Radius, Shader, SpecularFactor, 
 	self.type = 'light';
 	self.worldX = X;
 	self.worldY = Y;
-  Brightness = Brightness > lighting.dark ? lighting.dark : Brightness;
-	Brightness = Brightness < 1 ? 1 : Brightness;
+	self.brightness = Brightness > lighting.dark ? lighting.dark : Brightness;
+	self.brightness = self.brightness < 1 ? 1 : self.brightness;
 	self.shader = Shader;
 	self.x = Math.round(X / lighting.resolution);
 	self.y = Math.round(Y / lighting.resolution);
 	self.r = R;
 	self.g = G;
 	self.b = B;
-	self.a = lighting.dark - Brightness;
+	self.a = lighting.dark - self.brightness;
 	self.specularFactor = SpecularFactor;
 	self.radius = Math.round(Radius / lighting.resolution);
 	self.radiusSq = self.radius * self.radius;
@@ -198,12 +198,61 @@ function Light(NAME, X, Y, R, G, B, Brightness, Radius, Shader, SpecularFactor, 
 		self.y = Math.round(Y / lighting.resolution);
 	}
 
+	this.getShaderName = function()
+	{
+		switch(self.shader)
+		{
+			case 0:{
+				return 'Normal';
+				break;
+			}
+			case 1:{
+				return 'Specular';
+				break;
+			}
+			case 2:{
+				return 'Hole';
+				break;
+			}
+			default:{
+				return 'Normal';
+			}
+		}
+	}
+
+	this.toggleLightInteraction = function()
+	{
+		self.interact = !self.interact;
+	}
+
+	this.changeShader = function()
+	{
+		self.shader = self.shader + 1 > 2 ? 0 : self.shader + 1;
+	}
+
+	this.changeSpecFactor = function(amount)
+	{
+		self.specularFactor += amount;
+		self.baseSpecFactor = self.specularFactor;
+	}
+
+	this.setBrightness = function(new_b)
+	{
+		//I realized you can get some pretty baller effects with my lighting system when you don't limit the brightness.
+		//self.brightness = new_b > lighting.dark ? lighting.dark : new_b;
+		//self.brightness = new_b < 1 ? 1 : new_b;
+		self.brightness = new_b;
+		self.a = lighting.dark - self.brightness;
+		self.APL = ((lighting.dark - self.a) / self.radius);//alpha per layer
+		self.baseAPL = self.APL;
+		self.baseBrightness = self.a;
+	}
+
 	this.setRadius = function(new_radius)
 	{
 		self.radius = new_radius
 		self.radiusSq = self.radius * self.radius;
 		self.APL = ((lighting.dark - self.a) / self.radius);
-		//self.baseRadius = new_radius;
 		self.baseAPL = self.APL;
 	}
 	
