@@ -4,5 +4,5 @@ PROPS.add('testprop1', function(X, Y){
 	function(){
 		//example prop
 		//this.x += 20 * clock.delta;
-	}));
+	}, "testprop1"));
 });

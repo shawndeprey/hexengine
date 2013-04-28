@@ -1,4 +1,4 @@
-function Prop(NAME, X, Y, H, W, FOREGROUND, ANIMATION, SPECIALTY_FUNCTION)
+function Prop(NAME, X, Y, H, W, FOREGROUND, ANIMATION, SPECIALTY_FUNCTION, BASE_PROP_OBJECT)
 {
   system.log("Constructing Prop: " + NAME);
   var self = this;
@@ -13,6 +13,7 @@ function Prop(NAME, X, Y, H, W, FOREGROUND, ANIMATION, SPECIALTY_FUNCTION)
   self.animationBase = ANIMATION;
 	animate.addPreMadeAnimation(self.animationBase.name, self.animationBase);
 	self.specialtyFunction = SPECIALTY_FUNCTION;
+  self.basePropObject = BASE_PROP_OBJECT;
 
   this.update = function()
   {

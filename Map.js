@@ -30,16 +30,34 @@ function Map()
 		self.width = mapObj.width;
 		self.tileSize = mapObj.tileSize;
 		system.log("Loading Map: " + self.name);
-		mapObj.loadBackgroundAndForegroundAssets(self);
-		mapObj.loadCheckpoints(self);
-		mapObj.loadEvents(self);
-		mapObj.loadProps(self);
-		mapObj.loadLights(self);
-		mapObj.loadMapBGM(self);
-		mapObj.loadNavis(self);
-		mapObj.loadNPCs(self);
-		mapObj.loadPhysics(self);
-		mapObj.loadParticleEmitters(self);
+		self.loadBackgroundAndForegroundAssets(mapObj);
+		mapObj.initialize(self);
+		physics.addEntity(world.player);
+		var i = world.entity.length;
+		while(i--){
+			if(world.entity[i].applyPhysics){
+				physics.addEntity(world.entity[i]);
+			}
+		}
+	}
+
+	this.loadBackgroundAndForegroundAssets = function(mapObj)
+	{
+		for(var x = 0; x < mapObj.width; x++)
+		{
+			self.background[x] = [];
+			self.foreground[x] = [];
+			for(var y = 0; y < mapObj.height; y++)
+			{
+				self.background[x][y] = new Image();
+				self.foreground[x][y] = new Image();
+				self.background[x][y].src = ('res/map/' + mapObj.name + '/image/' + x + '-' + y + 'bg.png');
+				self.foreground[x][y].src = ('res/map/' + mapObj.name + '/image/' + x + '-' + y + 'fg.png');
+				self.background[x][y].addEventListener('load', self.loadedAsset, false);
+				self.foreground[x][y].addEventListener('load', self.loadedAsset, false);
+				self.numAssets += 2;
+			}
+		}
 	}
 
 	this.loadedAsset = function()

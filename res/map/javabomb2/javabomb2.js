@@ -6,25 +6,11 @@ function map_javabomb2()
 	self.width = 2;
 	self.tileSize = 1024;
 
-	this.loadMapBGM = function(theMap)
+	this.initialize = function(map)
 	{
-		theMap.bgm["chords"] = true;
-	}
-
-	this.loadParticleEmitters = function(theMap)
-	{
+		map.bgm["chords"] = true;
 		fx.addFXEmitter('explosion1', 500, 150, -1/*emitter*/, 50, true, 'rgb(255,0,0)', 'explosion-emitter');
-	}
-
-	this.loadPhysics = function(theMap)
-	{
-		physics.addEntity(world.player);
-		var i = world.entity.length;
-		while(i--){
-			if(world.entity[i].applyPhysics){
-				physics.addEntity(world.entity[i]);
-			}
-		}
+		fx.addFXEmitter('explosion1', 500, 150, -1/*emitter*/, 50, true, 'rgb(255,0,0)', 'explosion-emitter');
 		physics.addCollisionArea('col1', 390, 290, 15, 900);
 		physics.addCollisionArea('col2', 797, 302, 10, 100);
 		physics.addCollisionArea('col3', 817, 312, 10, 100);
@@ -36,67 +22,23 @@ function map_javabomb2()
 		physics.addCollisionArea('col9', 1450, 382, 15, 1050);
 		physics.addCollisionArea('col10', 1970, 288, 200, 15);
 		physics.addCollisionArea('col11', 1108, 130, 200, 25);
-	}
-
-	this.loadNPCs = function(theMap)
-	{
 		world.addEntity( new Entity_NPC('test1', 1425/*X*/, 150/*Y*/, 300/*speed*/, 0.25/*step size*/, 48/*W*/, 128/*H*/, false/*Foreground*/, 'base_idle'/*Script*/, 'base_secondary_update') );
-	}
-
-	this.loadNavis = function(theMap)
-	{
-		theMap.navi.addNode('start', 250, 219, 32, 32, 0);
-		theMap.navi.addNode('node2', 500, 219, 32, 32, 1);
-		theMap.navi.addNode('node3', 800, 219, 32, 32, 2);
-		theMap.navi.addNode('node4', 1200, 300, 32, 32, 3);
-		theMap.navi.addNode('node5', 1450, 350, 32, 32, 4);
-	}
-
-	this.loadLights = function(theMap)
-	{
-		system.log("Initializing World Lights...");
-		theMap.lights.push(new Light('Light1', 1000/*x*/, 400/*Y*/, 0/*R*/, 0/*G*/, 0/*B*/, 90/*brightness*/, 300/*radius*/, 0/*shader*/, 0.0/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light3', 210/*x*/, 165/*Y*/, 150/*R*/, 150/*G*/, 10/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light5', 518/*x*/, 165/*Y*/, 150/*R*/, 10/*G*/, 150/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light7', 820/*x*/, 165/*Y*/, 10/*R*/, 150/*G*/, 10/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light8', 1220/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light10', 1627/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-		theMap.lights.push(new Light('Light11', 1825/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
-	}
-
-	this.loadProps = function(theMap)
-	{
+		map.navi.addNode('start', 250, 219, 32, 32, 0);
+		map.navi.addNode('node2', 500, 219, 32, 32, 1);
+		map.navi.addNode('node3', 800, 219, 32, 32, 2);
+		map.navi.addNode('node4', 1200, 300, 32, 32, 3);
+		map.navi.addNode('node5', 1450, 350, 32, 32, 4);
+		map.lights.push(new Light('Light1', 1000/*x*/, 400/*Y*/, 0/*R*/, 0/*G*/, 0/*B*/, 90/*brightness*/, 300/*radius*/, 0/*shader*/, 0.0/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light3', 210/*x*/, 165/*Y*/, 150/*R*/, 150/*G*/, 10/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light5', 518/*x*/, 165/*Y*/, 150/*R*/, 10/*G*/, 150/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light7', 820/*x*/, 165/*Y*/, 10/*R*/, 150/*G*/, 10/*B*/, 50/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light8', 1220/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light10', 1627/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
+		map.lights.push(new Light('Light11', 1825/*x*/, 335/*Y*/, 10/*R*/, 10/*G*/, 250/*B*/, 60/*brightness*/, 250/*radius*/, 1/*shader*/, 0.5/*specFactor*/, true/*interraction*/));
 		PROPS.get('testprop1')(500, 180);
-	}
-
-	this.loadEvents = function(theMap)
-	{
-		theMap.em.addEvent('endOfLevel', 1500, 340, 64, 100, true, 'endOfLevel2', 'null', 'null');
-	}
-
-	this.loadCheckpoints = function(theMap)
-	{
-		theMap.checkpoint.addCheckpoint('spot2', 700, 219, 32, 32, false);
-		theMap.checkpoint.addCheckpoint('start', 400, 219, 32, 32, true);
-	}
-
-	this.loadBackgroundAndForegroundAssets = function(theMap)
-	{
-		for(var x = 0; x < self.width; x++)
-		{
-			theMap.background[x] = [];
-			theMap.foreground[x] = [];
-			for(var y = 0; y < self.height; y++)
-			{
-				theMap.background[x][y] = new Image();
-				theMap.foreground[x][y] = new Image();
-				theMap.background[x][y].src = ('res/map/' + self.name + '/image/' + x + '-' + y + 'bg.png');
-				theMap.foreground[x][y].src = ('res/map/' + self.name + '/image/' + x + '-' + y + 'fg.png');
-				theMap.background[x][y].addEventListener('load', theMap.loadedAsset, false);
-				theMap.foreground[x][y].addEventListener('load', theMap.loadedAsset, false);
-				theMap.numAssets += 2;
-			}
-		}
+		map.em.addEvent('endOfLevel', 1500, 340, 64, 100, true, 'endOfLevel2', 'null', 'null');
+		map.checkpoint.addCheckpoint('spot2', 700, 219, 32, 32, false);
+		map.checkpoint.addCheckpoint('start', 400, 219, 32, 32, true);
 	}
 }
 MAP_STORE.add('javabomb2', new map_javabomb2());

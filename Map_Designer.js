@@ -326,9 +326,7 @@ function Map_Designer()
 					break;
 				}
 				case'prop':{
-					ani = select.animationBase;
-					world.addEntity(new Prop(select.name, input.screenX, input.screenY, select.height, select.width, select.foreground,
-						new Animation(ani.name,ani.texture,ani.start,ani.end,ani.tpt,ani.size,ani.sheetSize, ani.repeat), select.specialtyFunction));
+					PROPS.get(select.basePropObject)(input.screenX, input.screenY);
 					break;
 				}
 				case'collision':{
@@ -412,6 +410,61 @@ function Map_Designer()
 		}
 	}
 
+	this.checkSaveMap = function()
+	{ //This function merely logs the rendered map file. JS can't write files like I need it to.
+		//Eventually, integrate with this: http://www.html5rocks.com/en/tutorials/file/filesystem/
+		if(select == false && input.key["escape"] == 2){
+			var d = new Date();
+			var mapSave = "\n\n\n//************************************************************************\n";
+			mapSave += 		"//*** MAP START - Copy the below into your map file. *********************\n";
+			mapSave += 		"//************************************************************************\n"
+			mapSave += "\t\t//Map "+map.name+" Generated on "+d.getMonth()+"/"+d.getDate()+"/"+d.getFullYear()+"\n";
+			$.each(map.bgm, function(k,v){
+				mapSave += "\t\tmap.bgm['"+k+"'] = "+v+";\n"
+			});
+			$.each(fx.getEffects(), function(k,v){
+				if(this.type == 'emitter'){
+					mapSave += "\t\tfx.addFXEmitter('"+this.name+"', "+this.x+", "+this.y+", "+this.life+", "+this.size+", "+this.al
+						+", '"+this.asset_or_color+"', '"+this.baseEmitterFuncName+"');\n"
+				}
+			});
+			$.each(physics.collisionArea, function(k,v){
+				mapSave += "\t\tphysics.addCollisionArea('"+this.name+"', "+this.x+", "+this.y+", "+this.h+", "+this.w+");\n"
+			});
+			$.each(world.entity, function(){
+				switch(this.type){
+					case 'npc':{
+						mapSave += "\t\tworld.addEntity(new Entity_NPC('"+this.name+"', "+this.x+", "+this.y+", "+this.speed
+							+", "+this.stepSize+", "+this.width+", "+this.height+", "+this.foreground+", '"+this.startAI+"', '"+this.secondAI+"'));\n"
+						break;
+					}
+					case 'prop':{
+						mapSave += "\t\tPROPS.get('"+this.basePropObject+"')("+this.x+", "+this.y+");\n";
+						break;
+					}
+				}
+			});
+			$.each(map.navi.node, function(k,v){
+				mapSave += "\t\tmap.navi.addNode('"+k+"', "+v.x+", "+v.y+", "+v.height+", "+v.width+", "+v.num+");\n";
+			});
+			$.each(map.lights, function(k,v){
+				mapSave += "\t\tmap.lights.push(new Light('"+v.name+"', "+v.worldX+", "+v.worldY+", "+v.r+", "+v.g+", "+v.b
+					+", "+v.brightness+", "+v.baseRadius+", "+v.shader+", "+v.baseSpecFactor+", "+v.interact+"));\n";
+			});
+			$.each(map.em.events, function(k,v){
+				mapSave += "\t\tmap.em.addEvent('"+k+"', "+v.x+", "+v.y+", "+v.height+", "+v.width+", "+v.active
+					+", '"+v.onEnterBase+"', '"+v.onActionBase+"', '"+v.onExitBase+"');\n";
+			});
+			$.each(map.checkpoint.checkpoint, function(k,v){
+				mapSave += "\t\tmap.checkpoint.addCheckpoint('"+k+"', "+v.x+", "+v.y+", "+v.height+", "+v.width+", "+v.active+");\n";
+			});
+			mapSave += "//************************************************************************\n";
+			mapSave += "//*** MAP END - Copy the above into your map file. ***********************\n";
+			mapSave += "//************************************************************************";
+			system.log(mapSave);
+		}
+	}
+
 	this.update = function()
 	{
 		x = input.screenX;
@@ -432,5 +485,6 @@ function Map_Designer()
 				}
 			}
 		}
+		self.checkSaveMap();
 	}
 }
