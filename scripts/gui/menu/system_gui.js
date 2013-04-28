@@ -8,6 +8,9 @@ function Initialize_System_Gui_Through_Api()
 	}));
 
 	gm.addMenu('system', new Gui_Menu(true/*Statless*/, 0/*xOffset*/, 0/*yOffset*/, function(){
+		/*this.addText(new Text_Area('assetsLoaded', function(){return 100;}, function(){return 100;}, function(){return 300;}, 18, 'Arial', '20px', 4, 255, 255, 255, 1, 
+			"Loading..."
+		));*/
 		this.addButton(new Image_Button('volumeUp', function(){return system.width - 50;}, function(){return this.h();}, function(){return 20;}, function(){return 20;}, 
 		'volumeUp', 'volumeUpHover', function(){
 			if(asset.masterVolume == 0) {

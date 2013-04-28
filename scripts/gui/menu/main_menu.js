@@ -9,6 +9,7 @@ function Initialize_Main_Menu_Through_Api()
 		'rgb(50,50,50)', 'rgb(80,80,80)', function(){
 			
 //Load a new game here!
+system.log("All assets loaded: " + asset.allAssetsLoaded);
 world.init();
 
 			gm.closeMenu();

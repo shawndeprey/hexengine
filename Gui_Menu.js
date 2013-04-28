@@ -47,6 +47,7 @@ function Gui_Manager()
 
 	this.getMenu = function(NAME)
 	{
+		console.log(self.menu);
 		if( self.menu.hasOwnProperty(NAME) ) {
 			return self.menu[NAME];
 		}

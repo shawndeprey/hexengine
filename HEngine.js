@@ -14,19 +14,21 @@ function HEngine()
 	this.init = function()
 	{
 		system.log("Initializing Hex Engine...");
-		asset.findSupportedFileTypesAndLoadAssets();
-		setTimeout('InitializeAllGameMenus()', 0);
+		setTimeout(function(){ InitializeAllGameMenus();}, 0);
+		asset.findSupportedFileTypesAndLoadAssets();	
 	}
 
   this.loop = function()
   {
-	   clock.update();
-		 asset.update();
-	   input.update();
-	  system.update();
-	   world.update();
-	      ru.update();
-	     gui.update();
-	 graphic.update();
+	  if(asset.allAssetsLoaded){
+		   clock.update();
+			 asset.update();
+		   input.update();
+		  system.update();
+		   world.update();
+		      ru.update();
+		     gui.update();
+		 graphic.update();
+		}
   }
 }

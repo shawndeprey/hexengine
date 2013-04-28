@@ -7,7 +7,7 @@ function Asset_Manager()
 	self.tex = {};
 	//self.bgmVolume = 0.0;
 	//self.sfxVolume = 0.0;
-	self.masterVolume = 0.0;
+	self.masterVolume = 0.1;
 	self.unmutedVolume = self.masterVolume;
 	self.currentBGM = "";
 	self.numberOfAssets = 0;
@@ -99,6 +99,7 @@ function Asset_Manager()
 		system.log("Loaded Asset: " + asset);
 		self.loadedAssets++;
 		if(self.getPercentOfLoadedAssets() == 1){ self.allAssetsLoaded = true; self.allAssetsLoadedEvent(); }
+		graphic.drawLoadMessages();
 	}
 	
 	this.getPercentOfLoadedAssets = function()
@@ -113,8 +114,8 @@ function Asset_Manager()
 			self.bgm[name] = new Audio(source);
 			self.bgm[name].volume = self.masterVolume;
 			self.bgm[name].type="audio/" + type;
-			self.bgm[name].preload = 'true';
-			$(self.bgm[name]).ready(self.loadedAsset(source));
+			self.bgm[name].addEventListener('canplaythrough', function(){ self.loadedAsset(source); }, false);
+			self.bgm[name].load();
 		} else {
 			system.log("Tried to add multiple key in BGM: " + name);
 		}
@@ -132,8 +133,8 @@ function Asset_Manager()
 			while(i--) {
 				self.sfx[name].channel[i] = new Audio(source);
 				self.sfx[name].channel[i].volume = self.masterVolume;
-				self.sfx[name].channel[i].preload = 'true';
-				$(self.sfx[name].channel[i]).ready(self.loadedAsset(source + " |channel " + i +"|"));
+				self.sfx[name].channel[i].addEventListener('canplaythrough', function(){ self.loadedAsset(source + " |channel " + i +"|"); }, false);
+				self.sfx[name].channel[i].load();
 			}
 		} else {
 			system.log("Tried to add multiple key in SFX: " + name);
@@ -146,7 +147,8 @@ function Asset_Manager()
 			system.log("Adding Texture: " + source);
 			self.tex[name] = new Image();
 			self.tex[name].src = source;
-			$(self.tex[name]).ready(self.loadedAsset(source));
+			//$(self.tex[name]).ready(self.loadedAsset(source));
+			self.tex[name].addEventListener('load', function(){ self.loadedAsset(source); }, false);
 		} else {
 			system.log("Tried to add multiple key in TEX: " + name);
 		}
@@ -156,11 +158,11 @@ function Asset_Manager()
 	{ 
 		system.log("Loading "+ext+" Files Into Memory...");
 		//BGM
-		//self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
-		//self.addBMG("swimorsinkOriginal", "res/audio/swim_or_sink_original."+ext, ext);
-		//self.addBMG("erubescent", "res/audio/erubescent."+ext, ext);
-		//self.addBMG("tenebrous", "res/audio/tenebrous."+ext, ext);
-		//self.addBMG("virescent", "res/audio/virescent."+ext, ext);
+		self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
+		self.addBMG("swimorsinkOriginal", "res/audio/swim_or_sink_original."+ext, ext);
+		self.addBMG("erubescent", "res/audio/erubescent."+ext, ext);
+		self.addBMG("tenebrous", "res/audio/tenebrous."+ext, ext);
+		self.addBMG("virescent", "res/audio/virescent."+ext, ext);
 		self.addBMG("chords", "res/audio/Chords."+ext, ext);
 		//SFX
 		self.addSFX("explode1", "res/audio/Explode."+ext, 5);
@@ -200,7 +202,7 @@ function Asset_Manager()
 	
 	this.allAssetsLoadedEvent = function()
 	{
-		self.playBGM("chords");
+		self.playBGM("swimorsink");
 	}
 
   this.update = function()
