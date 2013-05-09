@@ -20,6 +20,8 @@ as well as a name in your credits if you have them. Other than that, use this te
 
 ALSO, Please do send me an email so I can follow your project if you use hex or its tech! shawndeprey@gmail.com
 
+OR you can follow me on twitter: https://twitter.com/ShawnDeprey1
+
 =========
 
 Getting Started
