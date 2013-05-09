@@ -13,6 +13,7 @@ to squeeze large amounts of rendering, such as high resolution lighting, into a 
 =========
 
 With the exception of the example artwork and music...
+=========
 
 You are free to use any part of this engine you see fit so long as you give me credit. I require comments in your code
 as well as a name in your credits if you have them. Other than that, use this technology as you see fit :)
