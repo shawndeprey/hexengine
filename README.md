@@ -12,10 +12,7 @@ to squeeze large amounts of rendering, such as high resolution lighting, into a 
 
 =========
 
-This game engine is not 100% complete as the level design tools are only about 90% complete. Once the level design
-tools are complete, I will call the engine itself complete.
-
-=========
+With the exception of the example artwork and music...
 
 You are free to use any part of this engine you see fit so long as you give me credit. I require comments in your code
 as well as a name in your credits if you have them. Other than that, use this technology as you see fit :)
