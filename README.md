@@ -30,8 +30,10 @@ Open up index.html with your web browser. (I SERIOUSLY recommend chrome. Chrome 
 
 This game engine is not documented, but it should be easy enough to pick up given its size is relatively small. A few starting points are listed below.
 
-*HObjects.js* contains all engine initialization. You can follow the engine out from there in terms of scripting and additional initialization.
-*HEngine.js* contains the main loop. It's even called loop() for simplicity :)
-*Asset_Manager.js* This is where you will tell hexengine what assets you want to load. Follow the inline comments.
+**HObjects.js** contains all engine initialization. You can follow the engine out from there in terms of scripting and additional initialization.
+
+**HEngine.js** contains the main loop. It's even called loop() for simplicity :)
+
+**Asset_Manager.js** This is where you will tell hexengine what assets you want to load. Follow the inline comments.
 
 If you have any questions at all feel free to email Shawn: shawndeprey@gmail.com
