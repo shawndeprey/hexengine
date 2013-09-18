@@ -158,12 +158,12 @@ function Asset_Manager()
 	{ 
 		system.log("Loading "+ext+" Files Into Memory...");
 		//BGM
-		self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
+		/*self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
 		self.addBMG("swimorsinkOriginal", "res/audio/swim_or_sink_original."+ext, ext);
 		self.addBMG("erubescent", "res/audio/erubescent."+ext, ext);
 		self.addBMG("tenebrous", "res/audio/tenebrous."+ext, ext);
 		self.addBMG("virescent", "res/audio/virescent."+ext, ext);
-		self.addBMG("chords", "res/audio/Chords."+ext, ext);
+		self.addBMG("chords", "res/audio/Chords."+ext, ext);*/
 		//SFX
 		self.addSFX("explode1", "res/audio/Explode."+ext, 5);
 	}
@@ -188,7 +188,7 @@ function Asset_Manager()
 	}
 	
 	this.findSupportedFileTypesAndLoadAssets = function()
-	{ self.numberOfAssets = 20;
+	{ 	self.numberOfAssets = 19;
 		system.log("Finding Supported Browser File Types...");
 		self.loadTextures();
 		switch(system.browser)
