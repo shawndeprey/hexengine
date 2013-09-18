@@ -5,14 +5,15 @@ function Asset_Manager()
 	self.sfx = {};
 	self.bgm = {};
 	self.tex = {};
-	//self.bgmVolume = 0.0;
-	//self.sfxVolume = 0.0;
 	self.masterVolume = 0.1;
 	self.unmutedVolume = self.masterVolume;
 	self.currentBGM = "";
-	self.numberOfAssets = 0;
 	self.loadedAssets = 0;
 	self.allAssetsLoaded = false;
+
+	// Hexengine Asset Manager is pretty much stupid. It will not detect how many assets
+	// you have, so you MUST set this value manually
+	self.numberOfAssets = 19;
 
 	this.increaseVolume = function()
 	{
@@ -155,21 +156,23 @@ function Asset_Manager()
 	}
 	
 	this.loadAudio = function(ext)
-	{ 
+	{
+		// This is where you define your BMG and SFX
+
 		system.log("Loading "+ext+" Files Into Memory...");
+		
 		//BGM
-		self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
-		self.addBMG("swimorsinkOriginal", "res/audio/swim_or_sink_original."+ext, ext);
-		self.addBMG("erubescent", "res/audio/erubescent."+ext, ext);
-		self.addBMG("tenebrous", "res/audio/tenebrous."+ext, ext);
-		self.addBMG("virescent", "res/audio/virescent."+ext, ext);
-		self.addBMG("chords", "res/audio/Chords."+ext, ext);
+		//self.addBMG("swimorsink", "res/audio/swim_or_sink."+ext, ext);
+
 		//SFX
 		self.addSFX("explode1", "res/audio/Explode."+ext, 5);
 	}
 
 	this.loadTextures = function()
 	{
+		// This is where you define your textures. All except for you map backgrounds.
+		// Map backgrounds should be included in your map folder. See example Javabomb.
+
 		system.log("Loading All Textures...");
 		self.addTexture('player', 'res/image/player/CharaGridBaseNew.png');
 		self.addTexture('playerOld', 'res/image/player/CharaGridBase.png');
@@ -188,7 +191,7 @@ function Asset_Manager()
 	}
 	
 	this.findSupportedFileTypesAndLoadAssets = function()
-	{ self.numberOfAssets = 20;
+	{
 		system.log("Finding Supported Browser File Types...");
 		self.loadTextures();
 		switch(system.browser)
