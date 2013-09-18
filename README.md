@@ -1,4 +1,4 @@
-hexengine
+hexengine v1.0
 =========
 
 HTML5 Game Engine
