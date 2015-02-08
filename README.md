@@ -24,6 +24,8 @@ Please do send me an email so I can follow your project if you use hex or its te
 Getting Started
 =========
 
+Feature Overview: https://www.youtube.com/watch?v=xT5Hos5wlsc
+
 Open up index.html with your web browser. (I SERIOUSLY recommend chrome. Chrome is hundreds of times faster than the competition)
 
 =========
